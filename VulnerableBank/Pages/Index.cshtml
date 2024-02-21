@@ -1,0 +1,55 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "My Accounts";
+}
+
+<div class="container">
+    @if (TempData["TransferenciaExitosa"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["TransferenciaExitosa"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+
+    <div class="text-center">
+        <h3 class="display-4">Cuentas</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Alias</th>
+                    <th>Balance</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var account in Model.UserAccounts)
+                {
+                    <tr>
+                        <td> @account.Number </td>
+                        <td> @account.Alias </td>
+                        <td> RD$@account.Balance </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Transferencias
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a asp-page="./TransferenciaPropia" class="dropdown-item"> Propias </a>
+                                    </li>
+                                    <li>
+                                        <a asp-page="./TransferenciaTercero" class="dropdown-item"> Terceros </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
