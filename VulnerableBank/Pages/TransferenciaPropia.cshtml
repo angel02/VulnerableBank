@@ -44,7 +44,7 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(info)
         })
-        .then(res => res.text())
+        .then(res => res.json())
         .then(data => {
             if (callback)
                     callback(data);
@@ -61,16 +61,39 @@
         let transferInfo = { accountSource, accountDestination, amount, description };
 
         enviar(transferInfo, function (data) {
-            console.log(data)
+            console.log(data);
+            if (data.length == 0) {
+                Swal.fire({
+                    title: 'Transferencia completada',
+                    text: 'Transferencia realizada exitosamente',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Transferencia incompleta',
+                    text: data[0],
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                });
+            }
         });
     }
-
+    /*
+    * Envia múltiples peticiones simultáneamente usando valores fijos
+    */
     function enviarRaceCondition() {
-        let transferInfo = { accountSource: 1001, accountDestination: 1002, amount:20000, description: '' };
+        let transferInfo = { accountSource: 1001, accountDestination: 1003, amount: 10000, description: '' };
 
         let promises = [];
 
         for (let i = 0; i < 300; i++) {
+            if (i % 2 == 0) {
+                transferInfo.accountDestination = 1002;
+            } else {
+                transferInfo.accountDestination = 1003;
+            }
+
             promises.push(enviar(transferInfo, function (data) {
                 console.log(data)
             }));
@@ -79,16 +102,23 @@
         Promise.all(promises).then(res => { console.log('Finished') })
     }
 
-    function enviarRaceConditionDobleCuenta() {
+
+    /*
+    * Envia múltiples peticiones simultáneamente usando valores aleatorios
+    */
+    function enviarRaceConditionAleatorio() {
         let transferInfo = { accountSource: 1001, accountDestination: 1003, amount: 10000, description: '' };
 
         let promises = [];
 
         for (let i = 0; i < 300; i++) {
-            if (i % 2 == 0)
+            transferInfo.amount = parseInt(Math.random() * 10000);
+
+            if (i % 2 == 0) {
                 transferInfo.accountDestination = 1002;
-            else
+            } else {
                 transferInfo.accountDestination = 1003;
+            }
             
             promises.push(enviar(transferInfo, function (data) {
                 console.log(data)

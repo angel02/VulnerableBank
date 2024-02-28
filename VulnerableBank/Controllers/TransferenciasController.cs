@@ -11,36 +11,45 @@ namespace VulnerableBank.Controllers
     [ApiController]
     public class TransferenciasController(ApplicationDbContext context, UserManager<ApplicationUser> userManager) : ControllerBase
     {
+
+        /// <summary>
+        /// Retorna un arreglo con el mensaje y cambia el Status Code
+        /// </summary>
+        /// <param name="mensaje"></param>
+        /// <returns></returns>
+        private List<string> RespuestaNoValida(string mensaje)
+        {
+            Response.StatusCode = 400;
+            return new List<string> { mensaje };
+        }
+
+
         [HttpPost("[action]")]
         public async Task<List<string>> Terceros([FromBody]TransferRequest request)
         {
             var respuestas = new List<string>();
             var user = await userManager.GetUserAsync(User);
-            var accountSource = await context.Accounts.Where(x => x.UserId == user.Id)
-                                           .FirstOrDefaultAsync(x => x.Number == request.AccountSource);
+            var userAccounts = await context.Accounts.Where(x => x.UserId == user.Id).ToListAsync();
+            var accountSource = userAccounts.FirstOrDefault(x => x.Number == request.AccountSource);
 
 
             if (accountSource == null) {
-                respuestas.Add("La cuenta no existe");
-                return respuestas;
+                return RespuestaNoValida("La cuenta no existe");
             }
 
             if (accountSource.Balance < request.Amount) {
-                respuestas.Add("No cuenta con balance suficiente");
-                return respuestas;
+                return RespuestaNoValida("No cuenta con balance suficiente");
             }
 
 
-            var accountDestination = await context.Accounts.FirstOrDefaultAsync(x => x.Number == request.AccountDestination);
+            var accountDestination = userAccounts.FirstOrDefault(x => x.Number == request.AccountDestination);
             if (accountDestination == null) {
-                respuestas.Add("La cuenta a la que intenta transferir no existe");
-                return respuestas;
+                return RespuestaNoValida("La cuenta a la que intenta transferir no existe");
             }
 
 
             if (accountSource.Number == accountDestination.Number) {
-                respuestas.Add("No puede transferir dinero a la misma cuenta");
-                return respuestas;
+                return RespuestaNoValida("No puede transferir dinero a la misma cuenta");
             }
 
 
@@ -61,26 +70,22 @@ namespace VulnerableBank.Controllers
 
             var accountSource = userAccounts.FirstOrDefault(x => x.Number == request.AccountSource);
             if (accountSource == null) {
-                respuestas.Add("La cuenta de origen no existe");
-                return respuestas;
+                return RespuestaNoValida("La cuenta de origen no existe");
             }
 
             if (accountSource.Balance < request.Amount) {
-                respuestas.Add("No cuenta con balance suficiente");
-                return respuestas;
+                return RespuestaNoValida("No cuenta con balance suficiente");
             }
 
 
             var accountDestination = userAccounts.FirstOrDefault(x => x.Number == request.AccountDestination);
             if (accountDestination == null) {
-                respuestas.Add("La cuenta destinataria no existe");
-                return respuestas;
+                return RespuestaNoValida("La cuenta destinataria no existe");
             }
 
 
             if(accountSource.Number == accountDestination.Number) {
-                respuestas.Add("No puede transferir dinero a la misma cuenta");
-                return respuestas;
+                return RespuestaNoValida("No puede transferir dinero a la misma cuenta");
             }
 
 
