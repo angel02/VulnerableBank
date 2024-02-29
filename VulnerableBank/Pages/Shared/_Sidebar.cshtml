@@ -1,0 +1,156 @@
+﻿
+<aside class="left-sidebar sidebar-dark" id="left-sidebar">
+    <div id="sidebar" class="sidebar sidebar-with-footer">
+        <!-- Aplication Brand -->
+        <div class="app-brand">
+            <a asp-page="/Index">
+                <img src="images/logo2.svg" alt="HackconRD">
+            </a>
+        </div>
+        <!-- begin sidebar scrollbar -->
+        <div class="sidebar-left" data-simplebar style="height: 100%;">
+            <!-- sidebar menu -->
+            <ul class="nav sidebar-inner" id="sidebar-menu">
+                <li class="active">
+                    <a class="sidenav-item-link" asp-page="/Index">
+                        <i class="mdi mdi-briefcase-account-outline"></i>
+                        <span class="nav-text">Cuentas</span>
+                    </a>
+                </li>
+                @* <li class="section-title"> Apps </li> *@
+                
+
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#consultas"
+                       aria-expanded="false" aria-controls="consultas">
+                        <i class="mdi mdi-file-search-outline"></i>
+                        <span class="nav-text">Consultas</span> <b class="caret"></b>
+                    </a>
+                    <ul class="collapse" id="consultas" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li>
+                                <a asp-page="/Index" class="sidenav-item-link">
+                                    <span class="nav-text">Cuentas</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="/Index" class="sidenav-item-link">
+                                    <span class="nav-text"> Estado de cuenta </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="/Index" class="sidenav-item-link">
+                                    <span class="nav-text">Tarjetas de crédito</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="/Index" class="sidenav-item-link">
+                                    <span class="nav-text">Estado de tarjetas</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="/Index" class="sidenav-item-link">
+                                    <span class="nav-text">Préstamos</span>
+                                </a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#email" aria-expanded="false" aria-controls="email">
+                        <i class="mdi mdi-bank-transfer"></i>
+                        <span class="nav-text">Transferencias</span> <b class="caret"></b>
+                    </a>
+                    <ul class="collapse" id="email" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li>
+                                <a asp-page="./TransferenciaPropias" class="sidenav-item-link">
+                                    <span class="nav-text">Propias</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="./TransferenciaTerceros" class="sidenav-item-link">
+                                    <span class="nav-text"> Terceros </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="/Index" class="sidenav-item-link">
+                                    <span class="nav-text">Interbancarias</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="/Index" class="sidenav-item-link">
+                                    <span class="nav-text">Historial</span>
+                                </a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#pagoTarjetas" aria-expanded="false" aria-controls="pagoTarjetas">
+                        <i class="mdi mdi-credit-card"></i>
+                        <span class="nav-text">Pagos de tarjetas</span> <b class="caret"></b>
+                    </a>
+                        <ul class="collapse" id="pagoTarjetas" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li> <a asp-page="./Index" class="sidenav-item-link"> <span class="nav-text"> Pagos propios</span> </a> </li>
+                            <li> <a asp-page="./Index" class="sidenav-item-link"> <span class="nav-text"> Pagos a terceros </span> </a> </li>
+                            <li> <a asp-page="/Index" class="sidenav-item-link"> <span class="nav-text"> Pagos interbancarias</span> </a> </li>
+                            <li> <a asp-page="/Index" class="sidenav-item-link"> <span class="nav-text">Historial</span> </a> </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#pagoPrestamos" aria-expanded="false" aria-controls="pagoPrestamos">
+                        <i class="mdi mdi-bank-transfer-in"></i>
+                        <span class="nav-text">Pagos de préstamos</span> <b class="caret"></b>
+                    </a>
+                    <ul class="collapse" id="pagoPrestamos" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                        <li> <a asp-page="./Index" class="sidenav-item-link"> <span class="nav-text"> Pagos propios </span> </a> </li>
+                        <li> <a asp-page="./Index" class="sidenav-item-link"> <span class="nav-text"> Pagos a terceros </span> </a> </li>
+                        <li> <a asp-page="/Index" class="sidenav-item-link"> <span class="nav-text"> Pagos interbancarios </span> </a> </li>
+                        <li> <a asp-page="/Index" class="sidenav-item-link"> <span class="nav-text"> Historial </span> </a> </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li>
+                    <a asp-page="./Index" class="sidenav-item-link">
+                        <i class="mdi mdi-toolbox-outline"></i>
+                        <span class="nav-text">Pagos de servicios</span>
+                    </a>
+                </li>
+            </ul>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-footer-content">
+            <ul class="d-flex">
+                <li>
+                    <a class="dropdown-link-item"></a>
+                    <a class="dropdown-link-item" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" title="Perfil">
+                        <i class="mdi mdi-settings"></i>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-link-item"></a>
+                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" class="dropdown-link-item" data-toggle="tooltip" title="Cerrar sesión">
+                        <i class="mdi mdi-logout"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+</aside>
