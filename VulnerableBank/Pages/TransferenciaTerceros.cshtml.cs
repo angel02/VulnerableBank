@@ -31,7 +31,11 @@ namespace VulnerableBank.Pages
             Input = new InputModel();
 
             var user = await GetUser();
-            UserAccounts = new SelectList(context.Accounts.Where(x => x.UserId == user.Id), "Number", "Alias");
+
+            var userAccounts = await context.Accounts.Where(x => x.UserId == user.Id).AsNoTracking().ToListAsync();
+                userAccounts.ForEach(x => x.Alias += $" (balance RD$ {x.Balance:n})");
+
+            UserAccounts = new SelectList(userAccounts, "Number", "Alias");
 
             return Page();
         }

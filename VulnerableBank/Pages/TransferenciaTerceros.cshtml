@@ -1,9 +1,8 @@
 ﻿@page
 @model TransferenciaTerceroModel
 @{
-    ViewData["Title"] = "Transferencia a terceros";
+    ViewData["Title"] = "Transferencia terceros";
 }
-<h3>@ViewData["Title"]</h3>
 
 <div class="container">
     @if (TempData["ValidacionTransferencia"] != null) {
@@ -17,35 +16,71 @@
         <div class="mb-3 row">
             <label asp-for="Input.AccountSource" class="col-sm-2 col-form-label">Cuenta de origen</label>
             <div class="col-sm-10">
-                <select class="form-select" asp-items="Model.UserAccounts" asp-for="Input.AccountSource"></select>
+                <select class="form-select form-control" asp-items="Model.UserAccounts" id="accountSourceNumber"></select>
             </div>
         </div>
         <div class="mb-3 row">
             <label asp-for="Input.AccountDestination" class="col-sm-2 col-form-label">Cuenta destinatario</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" asp-for="Input.AccountDestination" />
+                <input type="number" class="form-control" asp-for="Input.AccountDestination" id="accountDestinationNumber" />
             </div>
         </div>
         <div class="mb-3 row">
             <label asp-for="Input.Amount" class="col-sm-2 col-form-label">Cantidad</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" asp-for="Input.Amount" placeholder="0.00" />
+                <input type="number" class="form-control" id="amount" placeholder="0.00" />
             </div>
         </div>
         <div class="mb-3 row">
             <label asp-for="Input.Description" class="col-sm-2 col-form-label">Descripción</label>
             <div class="col-sm-10">
-                <textarea class="form-control" asp-for="Input.Description"></textarea>
+                <textarea class="form-control" id="description"></textarea>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-info btn-block">Enviar</button>
+        <button type="button" id="btnSent" class="btn btn-info btn-block">Enviar</button>
     </form>
 </div>
 
 <script>
-    window.onload = function(){
-        var accountSource = document.getElementById("Input_AccountSource")
-        var accountDestination = document.getElementById("Input_AccountDestination")
+    function enviar(info, callback) {
+        return fetch("/api/transferencias/terceros", {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(info)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (callback)
+                callback(data);
+        });
+    }
+
+    document.getElementById("btnSent").onclick = function () {
+        let accountSource = document.getElementById("accountSourceNumber").value;
+        let accountDestination = document.getElementById("accountDestinationNumber").value;
+        let amount = document.getElementById("amount").value;
+        let description = document.getElementById("description").value;
+
+        let transferInfo = { accountSource, accountDestination, amount, description };
+
+        enviar(transferInfo, function (data) {
+            console.log(data);
+            if (data.length == 0) {
+                Swal.fire({
+                    title: 'Transferencia completada',
+                    text: 'Transferencia realizada exitosamente',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Transferencia incompleta',
+                    text: data[0],
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                });
+            }
+        });
     }
 </script>

@@ -13,5 +13,6 @@ namespace VulnerableBank.Data
 
         public DbSet<Account> Accounts { get; set; }
         public override DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

@@ -3,20 +3,19 @@
 @{
     ViewData["Title"] = "Transferencia propias";
 }
-<h3>@ViewData["Title"]</h3>
 
 <div class="container">
     <form method="post" id="formulario" name="formulario">
         <div class="mb-3 row">
             <label for="accountSourceNumber" class="col-sm-2 col-form-label">Cuenta de origen</label>
             <div class="col-sm-10">
-                <select class="form-select" asp-items="Model.AccountOrigins" id="accountSourceNumber"></select>
+                <select class="form-select form-control" asp-items="Model.AccountOrigins" id="accountSourceNumber"></select>
             </div>
         </div>
         <div class="mb-3 row">
             <label for="accountDestinationNumber" class="col-sm-2 col-form-label">Cuenta destinatario</label>
             <div class="col-sm-10">
-                <select class="form-select" asp-items="Model.AccountDestinations" id="accountDestinationNumber"></select>
+                <select class="form-select form-control" asp-items="Model.AccountDestinations" id="accountDestinationNumber"></select>
             </div>
         </div>
         <div class="mb-3 row">
@@ -38,8 +37,9 @@
 
 
 <script>
+    const baseUrl = '@Url.Page("/Index")';
     function enviar(info, callback) {
-        return fetch("/api/transferencias/terceros", {
+        return fetch("/api/transferencias/propias", {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(info)
@@ -48,7 +48,10 @@
         .then(data => {
             if (callback)
                     callback(data);
-        });
+        })
+        .catch(err => {
+
+        })
     }
 
 
@@ -68,7 +71,11 @@
                     text: 'Transferencia realizada exitosamente',
                     icon: 'success',
                     confirmButtonText: 'Continuar'
+                }).then((result) => {
+                    window.location.replace('/');
                 });
+
+                
             } else {
                 Swal.fire({
                     title: 'Transferencia incompleta',
@@ -95,7 +102,11 @@
             }
 
             promises.push(enviar(transferInfo, function (data) {
-                console.log(data)
+                if (data.length == 0) {
+                    console.log('%c Transferencia realizada con éxito !!! ', 'background: #222; color: #18db4c');
+                } else {
+                    console.log('%c Transferencia rechazada. ' + data[0] + ' - ' + Date.now(), 'background: #222; color: #db1818');
+                }
             }));
         }
 

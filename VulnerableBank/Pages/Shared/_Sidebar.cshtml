@@ -21,6 +21,41 @@
                 
 
                 <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#email" aria-expanded="false" aria-controls="email">
+                        <i class="mdi mdi-bank-transfer"></i>
+                        <span class="nav-text">Transferencias</span> <b class="caret"></b>
+                    </a>
+                    <ul class="collapse" id="email" data-parent="#sidebar-menu">
+                        <div class="sub-menu">
+                            <li>
+                                <a asp-page="./TransferenciaPropias" class="sidenav-item-link">
+                                    <span class="nav-text">Propias</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="./TransferenciaTerceros" class="sidenav-item-link">
+                                    <span class="nav-text"> Terceros </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="/Index" class="sidenav-item-link">
+                                    <span class="nav-text">Interbancarias</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-page="/Index" class="sidenav-item-link">
+                                    <span class="nav-text">Historial</span>
+                                </a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+
+                <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#consultas"
                        aria-expanded="false" aria-controls="consultas">
                         <i class="mdi mdi-file-search-outline"></i>
@@ -61,39 +96,7 @@
                     </ul>
                 </li>
 
-                <li class="has-sub">
-                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#email" aria-expanded="false" aria-controls="email">
-                        <i class="mdi mdi-bank-transfer"></i>
-                        <span class="nav-text">Transferencias</span> <b class="caret"></b>
-                    </a>
-                    <ul class="collapse" id="email" data-parent="#sidebar-menu">
-                        <div class="sub-menu">
-                            <li>
-                                <a asp-page="./TransferenciaPropias" class="sidenav-item-link">
-                                    <span class="nav-text">Propias</span>
-                                </a>
-                            </li>
 
-                            <li>
-                                <a asp-page="./TransferenciaTerceros" class="sidenav-item-link">
-                                    <span class="nav-text"> Terceros </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a asp-page="/Index" class="sidenav-item-link">
-                                    <span class="nav-text">Interbancarias</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a asp-page="/Index" class="sidenav-item-link">
-                                    <span class="nav-text">Historial</span>
-                                </a>
-                            </li>
-                        </div>
-                    </ul>
-                </li>
 
                 <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#pagoTarjetas" aria-expanded="false" aria-controls="pagoTarjetas">

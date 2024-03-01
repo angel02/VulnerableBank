@@ -14,7 +14,7 @@
 
 
 <div class="text-center">
-    <table class="table">
+    @* <table class="table">
         <thead>
             <tr>
                 <th>Número</th>
@@ -48,5 +48,81 @@
                 </tr>
             }
         </tbody>
-    </table>
+    </table> *@
+    <div class="accordion accordion-shadow" id="accordionShadow">
+        @foreach (var account in Model.UserAccounts)
+        {
+            <div class="card">
+                <div class="card-header" id="heading-@account.Number">
+                    <h2 class="mb-0">
+                        <a class="btn btn-link row" data-toggle="collapse" data-target="#collapse-@account.Number"
+                                aria-expanded="true" aria-controls="collapse-@account.Number">
+                                <div class="row">
+                                    <div class="col-3">
+                                        @account.Number
+                                    </div>
+                                    <div class="col-3">
+                                        @account.Alias
+                                    </div>
+                                    <div class="col-3">
+                                        RD$ @account.Balance.ToString("#,##0")
+                                    </div>
+                                    <div class="col-2">
+                                        @* <div class="btn-group" >
+                                            <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Transferencias
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-page="./TransferenciaPropias" class="dropdown-item"> Propias </a>
+                                                </li>
+                                                <li>
+                                                    <a asp-page="./TransferenciaTerceros" class="dropdown-item"> Terceros </a>
+                                                </li>
+                                            </ul>
+                                        </div> *@
+                                    </div>
+                                </div>
+                        </a>
+                    </h2>
+                </div>
+                <div id="collapse-@account.Number" class="collapse" aria-labelledby="heading-@account.Number" data-parent="#accordionShadow">
+                    <div class="card-body">
+                        @{var transactions = Model.Transactions.Where(x => x.DestinationAccountNumber == account.Number || x.SourceAccountNumber == account.Number).ToList();};
+                        <table class="table">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                            </tr>
+                            @foreach (var transaction in transactions)
+                            {
+                                <tr>
+                                    <td>
+                                        @transaction.Date.ToLongDateString()
+                                    </td>
+                                    <td> 
+                                        @if(transaction.SourceAccountNumber == account.Number) {
+                                            <span> Enviado a @transaction.DestinationAccountNumber</span>
+                                        } else {
+                                            <span> Recibido desde @transaction.SourceAccountNumber</span>
+                                        }
+                                    </td>
+                                    <td> 
+                                        @if(transaction.SourceAccountNumber == account.Number) {
+                                            <span class="text-danger">RD$ - @transaction.Amount.ToString("#,##0") </span>
+                                        } else {
+                                            <span class="text-success">RD$ @transaction.Amount.ToString("#,##0") </span>
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
 </div>
