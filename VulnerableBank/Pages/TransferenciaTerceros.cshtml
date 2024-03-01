@@ -72,6 +72,8 @@
                     text: 'Transferencia realizada exitosamente',
                     icon: 'success',
                     confirmButtonText: 'Continuar'
+                }).then((result) => {
+                    window.location.replace('/');
                 });
             } else {
                 Swal.fire({
@@ -82,5 +84,32 @@
                 });
             }
         });
+    }
+
+    /*
+    * Envia múltiples peticiones simultáneamente usando valores fijos
+    */
+    function enviarRaceCondition() {
+        let transferInfo = { accountSource: 1001, accountDestination: 2001, amount: 10000, description: '' };
+
+        let promises = [];
+
+        for (let i = 0; i < 300; i++) {
+            if (i % 2 == 0) {
+                transferInfo.accountDestination = 2001;
+            } else {
+                transferInfo.accountDestination = 2002;
+            }
+
+            promises.push(enviar(transferInfo, function (data) {
+                if (data.length == 0) {
+                    console.log('%c Transferencia realizada con éxito !!! ', 'background: #222; color: #18db4c');
+                } else {
+                    console.log('%c Transferencia rechazada. ' + data[0] + ' - ' + Date.now(), 'background: #222; color: #db1818');
+                }
+            }));
+        }
+
+        Promise.all(promises).then(res => { console.log('Finished') })
     }
 </script>
