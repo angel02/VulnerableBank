@@ -37,7 +37,6 @@
 
 
 <script>
-    const baseUrl = '@Url.Page("/Index")';
     function enviar(info, callback) {
         return fetch("/api/transferencias/propias", {
             method: 'POST',
@@ -86,6 +85,7 @@
             }
         });
     }
+
     /*
     * Envia múltiples peticiones simultáneamente usando valores fijos
     */
@@ -132,7 +132,11 @@
             }
             
             promises.push(enviar(transferInfo, function (data) {
-                console.log(data)
+                if (data.length == 0) {
+                    console.log('%c Transferencia realizada con éxito !!! ' + ' - ' + Date.now(), 'background: #222; color: #18db4c');
+                } else {
+                    console.log('%c Transferencia rechazada. ' + data[0] + ' - ' + Date.now(), 'background: #222; color: #db1818');
+                }
             }));
         }
 
