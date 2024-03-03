@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Cuentas";
+    ViewData["Title"] = "Cuentas " + Model.CustomerUser.Name;
 }
 
 @if (TempData["TransferenciaExitosa"] != null)
