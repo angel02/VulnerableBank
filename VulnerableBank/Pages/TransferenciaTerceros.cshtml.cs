@@ -9,7 +9,7 @@ using VulnerableBank.Data.Models;
 
 namespace VulnerableBank.Pages
 {
-    [Authorize]
+    [Authorize(Roles = "customer")]
     public class TransferenciaTerceroModel(ILogger<TransferenciaTerceroModel> logger, UserManager<ApplicationUser> userManager, ApplicationDbContext context) : PageModel
     {
 

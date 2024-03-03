@@ -5,9 +5,11 @@ using VulnerableBank.Data.Models;
 using VulnerableBank.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VulnerableBank.Pages
 {
+    [Authorize(Roles = "customer")]
     public class TransferenciaPropiaModel(UserManager<ApplicationUser> userManager, ApplicationDbContext context) : PageModel
     {
         public SelectList AccountOrigins { get; set; }
