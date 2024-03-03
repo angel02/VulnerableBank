@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using VulnerableBank.Data;
 using VulnerableBank.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using VulnerableBank.Data.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -28,6 +31,8 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+var scope = app.Services.CreateScope();
+MasterSeeder.SeedDatabase(scope).Wait();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
