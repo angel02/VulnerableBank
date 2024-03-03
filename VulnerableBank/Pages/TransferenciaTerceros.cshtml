@@ -86,6 +86,16 @@
         });
     }
 
+    var order = 0;
+    function getNextAccount() {
+        let accounts = [1002, 1003, 2001, 2002, 2003, 3001, 3002, 3003];
+
+        if (order < accounts.length) order++;
+        else order = 0;
+
+        return accounts[order];
+    }
+
     /*
     * Envia múltiples peticiones simultáneamente usando valores fijos
     */
@@ -94,12 +104,8 @@
 
         let promises = [];
 
-        for (let i = 0; i < 300; i++) {
-            if (i % 2 == 0) {
-                transferInfo.accountDestination = 2001;
-            } else {
-                transferInfo.accountDestination = 2002;
-            }
+        for (let i = 0; i < 10; i++) {
+            transferInfo.accountDestination = getNextAccount();
 
             promises.push(enviar(transferInfo, function (data) {
                 if (data.length == 0) {
