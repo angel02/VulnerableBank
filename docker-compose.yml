@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  vulnerablebank:
+    image: ${DOCKER_REGISTRY-}vulnerablebank
+    build:
+      context: .
+      dockerfile: VulnerableBank/Dockerfile
+    depends_on:
+      - sqlserver
+
+
+  sqlserver:
+    container_name: sqlserver
+    hostname: sqlserver
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Test123.
+      - MSSQL_AGENT_ENABLED=true
+      - MSSQL_ENABLE_HADR=1
