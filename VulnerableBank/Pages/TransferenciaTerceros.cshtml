@@ -86,36 +86,33 @@
         });
     }
 
-    var order = 0;
-    function getNextAccount() {
-        let accounts = [1002, 1003, 2001, 2002, 2003, 3001, 3002, 3003];
-
-        if (order < accounts.length) order++;
-        else order = 0;
-
-        return accounts[order];
-    }
-
-    /*
+     /*
     * Envia múltiples peticiones simultáneamente usando valores fijos
     */
     function enviarRaceCondition() {
         let transferInfo = { accountSource: 1001, accountDestination: 2001, amount: 10000, description: '' };
 
-        let promises = [];
+        const accounts = [1002, 1003, 2001, 2002, 2003, 3001, 3002, 3003];
+        let procesos = [];
 
-        for (let i = 0; i < 10; i++) {
-            transferInfo.accountDestination = getNextAccount();
+        let order = 0;
+        for (let i = 0, order = 0; i < 100; i++, order++) {
+            if (accounts[order] == undefined) {
+                order = 0;
+            }
 
-            promises.push(enviar(transferInfo, function (data) {
+            transferInfo.accountDestination = accounts[order];
+
+            procesos.push(enviar(transferInfo, function (data) {
+                let time = Date.now();
                 if (data.length == 0) {
-                    console.log('%c Transferencia realizada con éxito !!! ', 'background: #222; color: #18db4c');
+                    console.log(`%c ${time} - Transferencia exitosa. Cuenta: ${transferInfo.accountDestination}`, 'background: #222; color: #18db4c; font-size: 30px;');
                 } else {
-                    console.log('%c Transferencia rechazada. ' + data[0] + ' - ' + Date.now(), 'background: #222; color: #db1818');
+                    console.log(`%c ${time} - ${data[0]}. Cuenta: ${transferInfo.accountDestination}`, 'background: #222; color: #db1818; font-size: 30px;');
                 }
             }));
         }
 
-        Promise.all(promises).then(res => { console.log('Finished') })
+        Promise.all(procesos);
     }
 </script>
