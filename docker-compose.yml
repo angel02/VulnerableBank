@@ -1,15 +1,6 @@
 version: '3.4'
 
 services:
-  vulnerablebank:
-    image: ${DOCKER_REGISTRY-}vulnerablebank
-    build:
-      context: .
-      dockerfile: VulnerableBank/Dockerfile
-    depends_on:
-      - sqlserver
-
-
   sqlserver:
     container_name: sqlserver
     hostname: sqlserver
@@ -21,3 +12,30 @@ services:
       - SA_PASSWORD=Test123.
       - MSSQL_AGENT_ENABLED=true
       - MSSQL_ENABLE_HADR=1
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Test123." -Q "SELECT 1" -b -o /dev/null
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  vulnerablebank:
+    image: apaulino/vulnerablebank
+    container_name: vulnerablebank
+    hostname: vulnerablebank
+    environment:
+      - DB_ADDRESS=host.docker.internal
+      - DB_NAME=VulnerableBank
+      - DB_USER=SA
+      - DB_PASSWORD=Test123.
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - 8080:8080
+      - 8081:8081
+    build:
+      context: .
+      dockerfile: VulnerableBank/Dockerfile
+    depends_on:
+      sqlserver:
+        condition: service_healthy

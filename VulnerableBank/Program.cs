@@ -6,10 +6,14 @@ using VulnerableBank.Data.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var dbServer = Environment.GetEnvironmentVariable("DB_ADDRESS") ?? "host.docker.internal";
+var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "VulnerableBank";
+var dbUser = Environment.GetEnvironmentVariable("DB_USER");
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+var connection = $"Server={dbServer};Database={dbName}; User Id={dbUser}; Password={dbPassword};TrustServerCertificate=True;MultipleActiveResultSets=true";
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connection));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
