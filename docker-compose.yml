@@ -18,13 +18,15 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
+    networks:
+      - hackconrd
 
   vulnerablebank:
     image: apaulino/vulnerablebank
     container_name: vulnerablebank
     hostname: vulnerablebank
     environment:
-      - DB_ADDRESS=host.docker.internal
+      - DB_ADDRESS=sqlserver
       - DB_NAME=VulnerableBank
       - DB_USER=SA
       - DB_PASSWORD=Test123.
@@ -37,3 +39,9 @@ services:
     depends_on:
       sqlserver:
         condition: service_healthy
+    networks:
+      - hackconrd
+
+networks:
+  hackconrd:
+    name: hackconrd
