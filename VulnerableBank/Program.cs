@@ -32,13 +32,16 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    
+
+    // Remove for demo
+    //app.UseHsts();
 }
 var scope = app.Services.CreateScope();
 MasterSeeder.SeedDatabase(scope).Wait();
 
-app.UseHttpsRedirection();
+// Remove for demo
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

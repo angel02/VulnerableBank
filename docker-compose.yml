@@ -29,10 +29,8 @@ services:
       - DB_USER=SA
       - DB_PASSWORD=Test123.
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
     ports:
       - 8080:8080
-      - 8081:8081
     build:
       context: .
       dockerfile: VulnerableBank/Dockerfile
