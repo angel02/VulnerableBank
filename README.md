@@ -6,7 +6,7 @@
 ![Logo del HackConRD.](imgs/race-condition.png)
 
 
-Este repositorio forma parte de la demostración de los race conditions en el HackConRD 2024, usando como demo un proyecto que emula un banco y se procede a ejecutar transacciones simultáneas explotando este fallo, ocasionando que el dinero se multiplique entre cuentas.
+Este repositorio forma parte de la demostración de los race conditions en el HackConRD 2024, usando como demo un proyecto que emula un banco y se procede a ejecutar transacciones simultáneas explotando este fallo, ocasionando que el dinero se multiplique entre cuentas. El presente proyecto es para fines educativos,
 
 
 Requisitos para ejecutar la demo
@@ -48,3 +48,9 @@ http://localhost:8080/TransferenciaTerceros
 ### 3. Abrir consola del navegador presionando la tecla F12 y haciendo click en la pestaña "Console"
 
 ### 4. Copiar contenido del exploit y ejecutar ([Link al exploit](VulnerableBank/ExploitTerceros.js))
+
+
+
+## Disclaimer:
+
+La información presentada aquí sobre race conditions es solo con fines educativos e informativos. No constituye asesoramiento profesional y no nos hacemos responsables de cualquier consecuencia derivada de su uso o aplicación. Siempre haga un uso ético de la información en beneficio de la sociedad.
