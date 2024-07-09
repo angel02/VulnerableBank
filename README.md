@@ -6,7 +6,7 @@
 ![Logo del HackConRD.](imgs/race-condition.png)
 
 
-Este repositorio forma parte de la demostración de los race conditions en el HackConRD 2024, usando como demo un proyecto que emula un banco y se procede a ejecutar transacciones simultáneas explotando este fallo, ocasionando que el dinero se multiplique entre cuentas. El presente proyecto es para fines educativos,
+Este repositorio forma parte de la demostración de los race conditions en el HackConRD 2024, usando como demo un proyecto que emula un banco y se procede a ejecutar transacciones simultáneas explotando este fallo, ocasionando que el dinero se multiplique entre cuentas. El presente proyecto es para fines educativos.
 
 
 Requisitos para ejecutar la demo
@@ -17,7 +17,7 @@ Requisitos para ejecutar la demo
 
 ### Clonar el proyecto y entrar en la carpeta
 ```bash
-git pull https://github.com/angel02/VulnerableBank.git
+git clone https://github.com/angel02/VulnerableBank.git
 cd VulnerableBank
 ```
 
